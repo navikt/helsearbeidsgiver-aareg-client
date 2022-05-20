@@ -4,7 +4,6 @@ val ktor_version: String by project
 val kotlin_version: String by project
 val logback_version: String by project
 val mockk_version: String by project
-val githubUsername: String by project
 val githubPassword: String by project
 
 plugins {
@@ -33,10 +32,10 @@ repositories {
     mavenCentral()
     maven {
         credentials {
-            username = githubUsername
-            password = githubPassword
+            username = System.getenv("GITHUB_ACTOR") ?: "x-access-token"
+            password = System.getenv("GITHUB_TOKEN") ?: githubPassword
         }
-        setUrl("https://maven.pkg.github.com/navikt/helsearbeidsgiver-tokenprovider")
+        setUrl("https://maven.pkg.github.com/navikt/*")
     }
 }
 
