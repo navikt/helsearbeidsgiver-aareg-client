@@ -10,7 +10,17 @@ plugins {
     kotlin("jvm") version "1.6.21"
     kotlin("plugin.serialization") version "1.6.21"
     id("org.jmailen.kotlinter") version "3.10.0"
+    id("org.sonarqube") version "2.8"
     id("maven-publish")
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "navikt_helsearbeidsgiver-aareg-client")
+        property("sonar.organization", "navikt")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.login", System.getenv("SONAR_TOKEN"))
+    }
 }
 
 group = "no.nav.helsearbeidsgiver"
@@ -19,8 +29,6 @@ version = "0.1.2"
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "11"
 }
-
-
 
 tasks {
     test {
