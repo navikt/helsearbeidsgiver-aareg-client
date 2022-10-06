@@ -14,7 +14,6 @@ import kotlin.reflect.KFunction
 
 object MockResponse {
     val arbeidsforhold = "aareg-arbeidsforhold.json".readResource()
-    val error = "error-response.json".readResource()
 }
 
 fun mockAaregClient(content: String): AaregClient {
