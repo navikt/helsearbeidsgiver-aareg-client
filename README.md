@@ -28,9 +28,9 @@ fun main() {
         // Token config
     )
 
-    val aaregClient = AaregClient(url, "callId") { tokenProvider.getToken() }
+    val aaregClient = AaregClient(url) { tokenProvider.getToken() }
 
-    val arbeidsforhold = runBlocking { aaregClient.hentArbeidsforhold("fnr") }
+    val arbeidsforhold = runBlocking { aaregClient.hentArbeidsforhold("fnr", "callId") }
     println(arbeidsforhold)
 }
 ```
