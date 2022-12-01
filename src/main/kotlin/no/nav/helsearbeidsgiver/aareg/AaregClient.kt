@@ -3,6 +3,7 @@ package no.nav.helsearbeidsgiver.aareg
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.HttpClientEngine
+import io.ktor.client.engine.okhttp.OkHttp
 import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.ResponseException
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -26,7 +27,7 @@ import java.net.ConnectException
  */
 
 class AaregClient(
-    engine: HttpClientEngine,
+    engine: HttpClientEngine = OkHttp.create(),
     private val url: String,
     private val getAccessToken: () -> String,
     private val enableHttpLogging: Boolean = false,
@@ -38,37 +39,37 @@ class AaregClient(
     private val httpClient = createHttpClient(engine)
 
     private fun createHttpClient(engine: HttpClientEngine) = HttpClient(engine) {
-            @OptIn(ExperimentalSerializationApi::class)
-            install(ContentNegotiation) {
-                json(
-                    Json {
-                        ignoreUnknownKeys = true
-                        explicitNulls = false
-                    }
-                )
-            }
-            if (enableHttpLogging) {
-                install(Logging) {
-                    logger = object : io.ktor.client.plugins.logging.Logger {
-                        override fun log(message: String) {
-                            sikkerLogg.info(message)
-                        }
-                    }
+        @OptIn(ExperimentalSerializationApi::class)
+        install(ContentNegotiation) {
+            json(
+                Json {
+                    ignoreUnknownKeys = true
+                    explicitNulls = false
                 }
-            }
-            if (retryTimes > 0) {
-                install(HttpRequestRetry) {
-                    maxRetries = retryTimes
-                    retryIf { _, response ->
-                        !response.status.isSuccess()
-                    }
-                    delayMillis { retry ->
-                        retry * retryDelayInMs
-                    }
-                }
-            }
-            expectSuccess = true
+            )
         }
+        if (enableHttpLogging) {
+            install(Logging) {
+                logger = object : io.ktor.client.plugins.logging.Logger {
+                    override fun log(message: String) {
+                        sikkerLogg.info(message)
+                    }
+                }
+            }
+        }
+        if (retryTimes > 0) {
+            install(HttpRequestRetry) {
+                maxRetries = retryTimes
+                retryIf { _, response ->
+                    !response.status.isSuccess()
+                }
+                delayMillis { retry ->
+                    retry * retryDelayInMs
+                }
+            }
+        }
+        expectSuccess = true
+    }
 
     suspend fun hentArbeidsforhold(ident: String, callId: String): List<Arbeidsforhold> {
         val token = getAccessToken()

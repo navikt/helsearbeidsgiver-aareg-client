@@ -1,6 +1,5 @@
 package no.nav.helsearbeidsgiver.aareg
 
-import io.ktor.client.engine.okhttp.OkHttp
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -36,7 +35,7 @@ class AaregClientTest {
 
     @Test
     fun realDeal() {
-        val client = AaregClient(OkHttp.create(), "blah", { "tja" }, retryTimes = 0)
+        val client = AaregClient(url = "blah", getAccessToken = { "tja" }, retryTimes = 0)
         val response = runBlocking { client.hentArbeidsforhold("hei", "Number 2") }
         assertEquals(emptyList<Arbeidsforhold>(), response)
     }
