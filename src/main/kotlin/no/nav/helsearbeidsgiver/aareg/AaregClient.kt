@@ -52,7 +52,7 @@ class AaregClient(
             install(Logging) {
                 logger = object : io.ktor.client.plugins.logging.Logger {
                     override fun log(message: String) {
-                        sikkerLogg.info(message)
+                        sikkerLogg.debug(message)
                     }
                 }
             }
@@ -82,7 +82,7 @@ class AaregClient(
                 header("Nav-Personident", ident)
             }.also {
                 if (enableHttpLogging) {
-                    sikkerLogg.info("Svar fra aareg-API: " + it.bodyAsText())
+                    sikkerLogg.debug("Svar fra aareg-API: " + it.bodyAsText())
                 }
             }.body<List<Arbeidsforhold>>()
             return payload
