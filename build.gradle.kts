@@ -47,6 +47,7 @@ dependencies {
     val mockkVersion: String by project
     val kotlinSerializationVersion: String by project
     val junitJupiterVersion: String by project
+    val slf4jVersion: String by project
 
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
@@ -54,10 +55,12 @@ dependencies {
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
+    testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")
 }
 
 fun RepositoryHandler.mavenNav(repo: String): MavenArtifactRepository {
