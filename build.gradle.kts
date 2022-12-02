@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.3.1"
+version = "0.3.2"
 
 tasks {
     withType<KotlinCompile> {
