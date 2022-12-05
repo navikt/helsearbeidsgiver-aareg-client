@@ -14,7 +14,7 @@ dependencies {
     implementation("no.nav.helsearbeidsgiver:aareg-client:$aaregClientVersion")
 }
 ```
-
+ 
 ### Klienten instansieres slik
 
 ```kt
