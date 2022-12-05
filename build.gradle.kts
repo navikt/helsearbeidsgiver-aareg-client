@@ -5,10 +5,23 @@ plugins {
     kotlin("plugin.serialization")
     id("org.jmailen.kotlinter")
     id("maven-publish")
+    java
+    jacoco
+    id("org.sonarqube")
 }
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.3.3"
+version = "0.3.4"
+
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+}
 
 tasks {
     withType<KotlinCompile> {
@@ -16,8 +29,10 @@ tasks {
     }
     test {
         useJUnitPlatform()
+        finalizedBy(jacocoTestReport)
     }
 }
+
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -42,6 +57,15 @@ publishing {
     }
 }
 
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "navikt_helsearbeidsgiver-aareg-client")
+        property("sonar.organization", "navikt")
+        property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.sourceEncoding", "UTF-8")
+    }
+}
 dependencies {
     val ktorVersion: String by project
     val mockkVersion: String by project
