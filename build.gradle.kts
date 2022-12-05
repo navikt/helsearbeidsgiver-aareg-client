@@ -5,10 +5,14 @@ plugins {
     kotlin("plugin.serialization")
     id("org.jmailen.kotlinter")
     id("maven-publish")
+    java
+    jacoco
+    id("org.sonarcube") version "3.3"
 }
 
 group = "no.nav.helsearbeidsgiver"
 version = "0.3.3"
+
 
 tasks {
     withType<KotlinCompile> {
