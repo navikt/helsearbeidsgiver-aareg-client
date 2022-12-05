@@ -1,23 +1,14 @@
 package no.nav.helsearbeidsgiver.aareg
 
-import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.ResponseException
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.http.isSuccess
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.ExperimentalSerializationApi
-import kotlinx.serialization.json.Json
+import io.ktor.serialization.JsonConvertException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.net.ConnectException
@@ -27,49 +18,12 @@ import java.net.ConnectException
  */
 
 class AaregClient(
-    engine: HttpClientEngine = OkHttp.create(),
     private val url: String,
-    private val getAccessToken: () -> String,
-    private val enableHttpLogging: Boolean = false,
-    private val retryTimes: Int = 3,
-    private val retryDelayInMs: Long = 1000L
+    private val getAccessToken: () -> String
 ) {
     private val sikkerLogg: Logger = LoggerFactory.getLogger("tjenestekall")
     private val aaregClientLogger: Logger = LoggerFactory.getLogger("helsearbeidsgiver-aareg-client")
-    private val httpClient = createHttpClient(engine)
-
-    private fun createHttpClient(engine: HttpClientEngine) = HttpClient(engine) {
-        @OptIn(ExperimentalSerializationApi::class)
-        install(ContentNegotiation) {
-            json(
-                Json {
-                    ignoreUnknownKeys = true
-                    explicitNulls = false
-                }
-            )
-        }
-        if (enableHttpLogging) {
-            install(Logging) {
-                logger = object : io.ktor.client.plugins.logging.Logger {
-                    override fun log(message: String) {
-                        sikkerLogg.debug(message)
-                    }
-                }
-            }
-        }
-        if (retryTimes > 0) {
-            install(HttpRequestRetry) {
-                maxRetries = retryTimes
-                retryIf { _, response ->
-                    !response.status.isSuccess()
-                }
-                delayMillis { retry ->
-                    retry * retryDelayInMs
-                }
-            }
-        }
-        expectSuccess = true
-    }
+    private val httpClient = createHttpClient()
 
     suspend fun hentArbeidsforhold(ident: String, callId: String): List<Arbeidsforhold> {
         val token = getAccessToken()
@@ -81,9 +35,7 @@ class AaregClient(
                 header("Nav-Consumer-Token", "Bearer $token")
                 header("Nav-Personident", ident)
             }.also {
-                if (enableHttpLogging) {
-                    sikkerLogg.debug("Svar fra aareg-API: " + it.bodyAsText())
-                }
+                sikkerLogg.debug("Svar fra aareg-API: " + it.bodyAsText())
             }.body<List<Arbeidsforhold>>()
             return payload
         } catch (responseException: ResponseException) {
@@ -91,6 +43,10 @@ class AaregClient(
             return emptyList()
         } catch (connectException: ConnectException) {
             aaregClientLogger.error("Hente arbeidsforhold callId=[$callId] feilet:", connectException)
+            return emptyList()
+        } catch (jsonConvertException: JsonConvertException) {
+            aaregClientLogger.error("Hente arbeidsforhold callId=[$callId] feilet, kunne ikke lese JSON")
+            sikkerLogg.error("Hente arbeidsforhold callId=[$callId] feilet", jsonConvertException)
             return emptyList()
         }
     }

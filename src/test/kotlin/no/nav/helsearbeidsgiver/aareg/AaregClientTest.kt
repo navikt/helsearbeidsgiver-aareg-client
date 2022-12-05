@@ -1,5 +1,6 @@
 package no.nav.helsearbeidsgiver.aareg
 
+import io.ktor.http.HttpStatusCode
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -13,29 +14,36 @@ class AaregClientTest {
     */
     @Test
     fun `Returnerer gyldig objekt når alt er oK`() {
-        val mockEngine = mockSuccessResponse(MockResponse.arbeidsforhold)
-        val client = AaregClient(mockEngine, "url", { "fake token" })
         val response = runBlocking {
-            client.hentArbeidsforhold("ident", "call-id")
+            mockAaregClient(MockResponse.arbeidsforhold)
+                .hentArbeidsforhold("ident", "call-id")
         }
         assertTrue(response.any { it.arbeidsgiver.organisasjonsnummer == "896929119" })
     }
 
     @Test
-    fun testRetry() {
-        val mockEngine = mockErrorResponse()
-        val client = AaregClient(mockEngine, "url", { "fake token" }, retryDelayInMs = 5L)
+    fun test_OK_svar_Med_Uventet_JSON() {
         val response = runBlocking {
-            client.hentArbeidsforhold("hei", "54-56 That's My Number")
+            mockAaregClient(MockResponse.error)
+                .hentArbeidsforhold("hei", "54-56 That's My Number")
         }
-        assertEquals(4, mockEngine.requestHistory.size)
+        val empty = emptyList<Arbeidsforhold>()
+        assertEquals(empty, response)
+    }
+
+    @Test
+    fun test_Server_Error() {
+        val response = runBlocking {
+            mockAaregClient("blablabla", HttpStatusCode.InternalServerError)
+                .hentArbeidsforhold("hei", "123456")
+        }
         val empty = emptyList<Arbeidsforhold>()
         assertEquals(empty, response)
     }
 
     @Test
     fun realDeal() {
-        val client = AaregClient(url = "blah", getAccessToken = { "tja" }, retryTimes = 0)
+        val client = AaregClient(url = "blah") { "tja" }
         val response = runBlocking { client.hentArbeidsforhold("hei", "Number 2") }
         assertEquals(emptyList<Arbeidsforhold>(), response)
     }
