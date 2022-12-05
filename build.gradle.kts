@@ -7,12 +7,21 @@ plugins {
     id("maven-publish")
     java
     jacoco
-    id("org.sonarcube") version "3.3"
+//    id("org.sonarcube")
 }
 
 group = "no.nav.helsearbeidsgiver"
 version = "0.3.3"
 
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+        csv.required.set(false)
+        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+    }
+}
 
 tasks {
     withType<KotlinCompile> {
@@ -20,8 +29,10 @@ tasks {
     }
     test {
         useJUnitPlatform()
+        finalizedBy(jacocoTestReport)
     }
 }
+
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
