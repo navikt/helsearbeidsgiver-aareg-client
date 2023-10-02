@@ -55,10 +55,10 @@ publishing {
 }
 
 dependencies {
+    val kotestVersion: String by project
     val ktorVersion: String by project
     val mockkVersion: String by project
     val kotlinSerializationVersion: String by project
-    val junitJupiterVersion: String by project
     val slf4jVersion: String by project
     val utilsVersion: String by project
 
@@ -71,7 +71,8 @@ dependencies {
     implementation("no.nav.helsearbeidsgiver:utils:$utilsVersion")
 
     testImplementation(testFixtures("no.nav.helsearbeidsgiver:utils:$utilsVersion"))
-    testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
     testImplementation("org.slf4j:slf4j-simple:$slf4jVersion")

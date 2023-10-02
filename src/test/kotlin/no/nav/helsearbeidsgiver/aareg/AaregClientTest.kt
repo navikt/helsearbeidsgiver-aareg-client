@@ -1,50 +1,41 @@
 package no.nav.helsearbeidsgiver.aareg
 
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.matchers.collections.shouldNotBeEmpty
 import io.ktor.http.HttpStatusCode
-import kotlinx.coroutines.runBlocking
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
 
-class AaregClientTest {
+class AaregClientTest : FunSpec({
 
     /*
     API Description:
     https://navikt.github.io/aareg/tjenester/integrasjon/api/
      */
-    @Test
-    fun `Returnerer gyldig objekt når alt er oK`() {
-        val response = runBlocking {
-            mockAaregClient(MockResponse.arbeidsforhold)
-                .hentArbeidsforhold("ident", "call-id")
-        }
-        assertTrue(response.any { it.arbeidsgiver.organisasjonsnummer == "896929119" })
+    test("gir ikke-tom liste med arbeidsforhold") {
+        val response = mockAaregClient(MockResponse.arbeidsforhold)
+            .hentArbeidsforhold("ident", "call-id")
+
+        response.filter { it.arbeidsgiver.organisasjonsnummer == "896929119" }.shouldNotBeEmpty()
     }
 
-    @Test
-    fun test_OK_svar_Med_Uventet_JSON() {
-        val response = runBlocking {
-            mockAaregClient(MockResponse.error)
-                .hentArbeidsforhold("hei", "54-56 That's My Number")
-        }
-        val empty = emptyList<Arbeidsforhold>()
-        assertEquals(empty, response)
+    test("gir tom liste ved uventet JSON") {
+        val response = mockAaregClient(MockResponse.error)
+            .hentArbeidsforhold("hei", "54-56 That's My Number")
+
+        response.shouldBeEmpty()
     }
 
-    @Test
-    fun test_Server_Error() {
-        val response = runBlocking {
-            mockAaregClient("blablabla", HttpStatusCode.InternalServerError)
-                .hentArbeidsforhold("hei", "123456")
-        }
-        val empty = emptyList<Arbeidsforhold>()
-        assertEquals(empty, response)
+    test("gir tom liste ved server-feil fra aareg") {
+        val response = mockAaregClient("blablabla", HttpStatusCode.InternalServerError)
+            .hentArbeidsforhold("hei", "123456")
+
+        response.shouldBeEmpty()
     }
 
-    @Test
-    fun realDeal() {
+    test("gir tom liste ved feil konfigurert klient") {
         val client = AaregClient(url = "blah") { "tja" }
-        val response = runBlocking { client.hentArbeidsforhold("hei", "Number 2") }
-        assertEquals(emptyList<Arbeidsforhold>(), response)
+        val response = client.hentArbeidsforhold("hei", "Number 2")
+
+        response.shouldBeEmpty()
     }
-}
+})
