@@ -7,7 +7,6 @@ plugins {
     id("maven-publish")
     java
     jacoco
-    id("org.sonarqube")
 }
 
 group = "no.nav.helsearbeidsgiver"
@@ -57,15 +56,6 @@ publishing {
     }
 }
 
-
-sonarqube {
-    properties {
-        property("sonar.projectKey", "navikt_helsearbeidsgiver-aareg-client")
-        property("sonar.organization", "navikt")
-        property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.sourceEncoding", "UTF-8")
-    }
-}
 dependencies {
     val ktorVersion: String by project
     val mockkVersion: String by project
