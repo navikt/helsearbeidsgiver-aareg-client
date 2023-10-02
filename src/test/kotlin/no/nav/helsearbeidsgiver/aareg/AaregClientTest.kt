@@ -11,7 +11,7 @@ class AaregClientTest {
     /*
     API Description:
     https://navikt.github.io/aareg/tjenester/integrasjon/api/
-    */
+     */
     @Test
     fun `Returnerer gyldig objekt når alt er oK`() {
         val response = runBlocking {

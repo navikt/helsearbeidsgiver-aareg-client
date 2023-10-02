@@ -11,24 +11,24 @@ data class Arbeidsforhold(
     val arbeidsavtaler: List<Arbeidsavtale>,
     val ansettelsesperiode: Ansettelsesperiode,
     @Serializable(with = LocalDateTimeSerializer::class)
-    val registrert: LocalDateTime
+    val registrert: LocalDateTime,
 )
 
 @Serializable
 data class Arbeidsavtale(
     val stillingsprosent: Double?,
-    val gyldighetsperiode: Periode
+    val gyldighetsperiode: Periode,
 )
 
 @Serializable
 data class Ansettelsesperiode(
-    val periode: Periode
+    val periode: Periode,
 )
 
 @Serializable
 data class Arbeidsgiver(
     val type: String,
-    val organisasjonsnummer: String?
+    val organisasjonsnummer: String?,
 )
 
 @Serializable
@@ -36,11 +36,11 @@ data class Periode(
     @Serializable(with = LocalDateSerializer::class)
     val fom: LocalDate?,
     @Serializable(with = LocalDateSerializer::class)
-    val tom: LocalDate? = null
+    val tom: LocalDate? = null,
 )
 
 @Serializable
 data class Opplysningspliktig(
     val type: String,
-    val organisasjonsnummer: String?
+    val organisasjonsnummer: String?,
 )

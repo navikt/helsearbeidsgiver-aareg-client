@@ -21,7 +21,7 @@ fun mockAaregClient(content: String, statusCode: HttpStatusCode = HttpStatusCode
         respond(
             content = content,
             status = statusCode,
-            headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString())
+            headers = headersOf(HttpHeaders.ContentType, ContentType.Application.Json.toString()),
         )
     }
 

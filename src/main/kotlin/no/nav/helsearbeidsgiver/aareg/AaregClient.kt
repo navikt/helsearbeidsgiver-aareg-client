@@ -19,7 +19,7 @@ import java.net.ConnectException
 
 class AaregClient(
     private val url: String,
-    private val getAccessToken: () -> String
+    private val getAccessToken: () -> String,
 ) {
     private val sikkerLogg: Logger = LoggerFactory.getLogger("tjenestekall")
     private val aaregClientLogger: Logger = LoggerFactory.getLogger("helsearbeidsgiver-aareg-client")
