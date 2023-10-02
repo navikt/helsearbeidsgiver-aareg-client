@@ -9,45 +9,41 @@ import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import io.ktor.serialization.JsonConvertException
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import no.nav.helsearbeidsgiver.utils.log.logger
+import no.nav.helsearbeidsgiver.utils.log.sikkerLogger
 import java.net.ConnectException
-
-/**
- * klient for å hente ut aktive arbeidsforhold på en person
- */
 
 class AaregClient(
     private val url: String,
     private val getAccessToken: () -> String,
 ) {
-    private val sikkerLogg: Logger = LoggerFactory.getLogger("tjenestekall")
-    private val aaregClientLogger: Logger = LoggerFactory.getLogger("helsearbeidsgiver-aareg-client")
     private val httpClient = createHttpClient()
+
+    private val logger = logger()
+    private val sikkerLogger = sikkerLogger()
 
     suspend fun hentArbeidsforhold(ident: String, callId: String): List<Arbeidsforhold> {
         val token = getAccessToken()
-        try {
-            val payload = httpClient.get(url) {
+        return try {
+            httpClient.get(url) {
                 contentType(ContentType.Application.Json)
                 bearerAuth(token)
                 header("X-Correlation-ID", callId)
                 header("Nav-Consumer-Token", "Bearer $token")
                 header("Nav-Personident", ident)
             }.also {
-                sikkerLogg.debug("Svar fra aareg-API: " + it.bodyAsText())
+                sikkerLogger.debug("Svar fra aareg-API: " + it.bodyAsText())
             }.body<List<Arbeidsforhold>>()
-            return payload
         } catch (responseException: ResponseException) {
-            aaregClientLogger.error("Hente arbeidsforhold callId=[$callId] feilet med http-kode ${responseException.response.status}")
-            return emptyList()
+            logger.error("Hente arbeidsforhold callId=[$callId] feilet med http-kode ${responseException.response.status}")
+            emptyList()
         } catch (connectException: ConnectException) {
-            aaregClientLogger.error("Hente arbeidsforhold callId=[$callId] feilet:", connectException)
-            return emptyList()
+            logger.error("Hente arbeidsforhold callId=[$callId] feilet:", connectException)
+            emptyList()
         } catch (jsonConvertException: JsonConvertException) {
-            aaregClientLogger.error("Hente arbeidsforhold callId=[$callId] feilet, kunne ikke lese JSON")
-            sikkerLogg.error("Hente arbeidsforhold callId=[$callId] feilet", jsonConvertException)
-            return emptyList()
+            logger.error("Hente arbeidsforhold callId=[$callId] feilet, kunne ikke lese JSON")
+            sikkerLogger.error("Hente arbeidsforhold callId=[$callId] feilet", jsonConvertException)
+            emptyList()
         }
     }
 }
