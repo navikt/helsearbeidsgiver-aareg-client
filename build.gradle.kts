@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     kotlin("jvm")
@@ -12,32 +12,30 @@ plugins {
 group = "no.nav.helsearbeidsgiver"
 version = "0.4.0"
 
-
-tasks.jacocoTestReport {
-    dependsOn(tasks.test)
-    reports {
-        xml.required.set(true)
-        csv.required.set(false)
-        html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
+java {
+    withSourcesJar()
+}
+
 tasks {
-    withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "11"
-    }
     test {
         useJUnitPlatform()
         finalizedBy(jacocoTestReport)
     }
-}
 
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
-
-    withSourcesJar()
+    jacocoTestReport {
+        dependsOn(test)
+        reports {
+            xml.required.set(true)
+            csv.required.set(false)
+            html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
+        }
+    }
 }
 
 repositories {
