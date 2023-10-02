@@ -60,6 +60,7 @@ dependencies {
     val kotlinSerializationVersion: String by project
     val junitJupiterVersion: String by project
     val slf4jVersion: String by project
+    val utilsVersion: String by project
 
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
@@ -68,7 +69,9 @@ dependencies {
     implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("io.ktor:ktor-client-logging:$ktorVersion")
+    implementation("no.nav.helsearbeidsgiver:utils:$utilsVersion")
 
+    testImplementation(testFixtures("no.nav.helsearbeidsgiver:utils:$utilsVersion"))
     testImplementation("org.junit.jupiter:junit-jupiter:$junitJupiterVersion")
     testImplementation("io.ktor:ktor-client-mock:$ktorVersion")
     testImplementation("io.mockk:mockk:$mockkVersion")
