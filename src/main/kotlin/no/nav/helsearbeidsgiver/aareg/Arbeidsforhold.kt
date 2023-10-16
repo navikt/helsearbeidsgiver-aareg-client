@@ -20,7 +20,7 @@ data class Arbeidsforhold(
 
 @Serializable
 data class Arbeidsavtale(
-    val stillingsprosent: Double?,
+    val stillingsprosent: Double? = null,
     val gyldighetsperiode: Periode,
 )
 
@@ -32,17 +32,17 @@ data class Ansettelsesperiode(
 @Serializable
 data class Arbeidsgiver(
     val type: String,
-    val organisasjonsnummer: String?,
+    val organisasjonsnummer: String? = null,
 )
 
 @Serializable
 data class Periode(
-    val fom: LocalDate?,
+    val fom: LocalDate? = null,
     val tom: LocalDate? = null,
 )
 
 @Serializable
 data class Opplysningspliktig(
     val type: String,
-    val organisasjonsnummer: String?,
+    val organisasjonsnummer: String? = null,
 )
