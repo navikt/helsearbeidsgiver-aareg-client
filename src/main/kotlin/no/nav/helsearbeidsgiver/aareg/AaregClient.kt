@@ -29,7 +29,6 @@ class AaregClient(
                 contentType(ContentType.Application.Json)
                 bearerAuth(token)
                 header("X-Correlation-ID", callId)
-                header("Nav-Consumer-Token", "Bearer $token")
                 header("Nav-Personident", ident)
             }.also {
                 sikkerLogger.debug("Svar fra aareg-API: " + it.bodyAsText())
