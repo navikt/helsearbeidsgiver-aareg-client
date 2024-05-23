@@ -10,7 +10,6 @@ plugins {
 }
 
 group = "no.nav.helsearbeidsgiver"
-version = "0.6.0"
 
 kotlin {
     compilerOptions {
@@ -36,6 +35,10 @@ tasks {
             html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
         }
     }
+}
+
+tasks.register("printVersion") {
+    printVersion()
 }
 
 repositories {
@@ -89,3 +92,5 @@ fun RepositoryHandler.mavenNav(repo: String): MavenArtifactRepository {
         }
     }
 }
+
+fun printVersion() = println(version)
