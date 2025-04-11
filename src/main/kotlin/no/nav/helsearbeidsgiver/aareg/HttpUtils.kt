@@ -11,9 +11,9 @@ internal fun createHttpClient(): HttpClient =
     HttpClient(Apache5) { configure() }
 
 internal fun HttpClientConfig<*>.configure() {
-    install(ContentNegotiation) {
-        expectSuccess = true
+    expectSuccess = true
 
+    install(ContentNegotiation) {
         json(jsonConfig)
     }
 }
