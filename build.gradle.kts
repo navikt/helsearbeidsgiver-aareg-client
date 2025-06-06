@@ -65,7 +65,7 @@ dependencies {
     val slf4jVersion: String by project
     val utilsVersion: String by project
 
-    api("no.nav.helsearbeidsgiver:utils:${utilsVersion}")
+    api("no.nav.helsearbeidsgiver:utils:$utilsVersion")
     api("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinSerializationVersion")
 
     implementation("io.ktor:ktor-client-apache5:$ktorVersion")
