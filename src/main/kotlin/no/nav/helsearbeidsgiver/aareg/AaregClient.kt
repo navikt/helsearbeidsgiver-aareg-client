@@ -1,48 +1,37 @@
 package no.nav.helsearbeidsgiver.aareg
 
 import io.ktor.client.call.body
-import io.ktor.client.plugins.ResponseException
 import io.ktor.client.request.bearerAuth
 import io.ktor.client.request.get
 import io.ktor.client.request.header
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import io.ktor.serialization.JsonConvertException
-import no.nav.helsearbeidsgiver.utils.log.logger
-import no.nav.helsearbeidsgiver.utils.log.sikkerLogger
-import java.net.ConnectException
+import no.nav.helsearbeidsgiver.utils.cache.LocalCache
+import no.nav.helsearbeidsgiver.utils.collection.mapKeysNotNull
+import no.nav.helsearbeidsgiver.utils.wrapper.Fnr
+import no.nav.helsearbeidsgiver.utils.wrapper.Orgnr
 
+/** Les om API-et til Aareg [her](https://navikt.github.io/aareg/tjenester/integrasjon/api/). */
 class AaregClient(
     private val url: String,
+    cacheConfig: LocalCache.Config,
     private val getAccessToken: () -> String,
 ) {
     private val httpClient = createHttpClient()
+    private val cache = LocalCache<List<Arbeidsforhold>>(cacheConfig)
 
-    private val logger = logger()
-    private val sikkerLogger = sikkerLogger()
-
-    suspend fun hentArbeidsforhold(ident: String, callId: String): List<Arbeidsforhold> {
-        val token = getAccessToken()
-        return try {
+    suspend fun hentAnsettelsesperioder(fnr: Fnr, callId: String): Map<Orgnr, Set<Periode>> =
+        cache.getOrPut(fnr.verdi) {
             httpClient.get(url) {
                 contentType(ContentType.Application.Json)
-                bearerAuth(token)
+                bearerAuth(getAccessToken())
                 header("X-Correlation-ID", callId)
-                header("Nav-Personident", ident)
-            }.also {
-                sikkerLogger.debug("Svar fra aareg-API: " + it.bodyAsText())
+                header("Nav-Personident", fnr.verdi)
             }.body<List<Arbeidsforhold>>()
-        } catch (responseException: ResponseException) {
-            logger.error("Hente arbeidsforhold callId=[$callId] feilet med http-kode ${responseException.response.status}")
-            emptyList()
-        } catch (connectException: ConnectException) {
-            logger.error("Hente arbeidsforhold callId=[$callId] feilet:", connectException)
-            emptyList()
-        } catch (jsonConvertException: JsonConvertException) {
-            logger.error("Hente arbeidsforhold callId=[$callId] feilet, kunne ikke lese JSON")
-            sikkerLogger.error("Hente arbeidsforhold callId=[$callId] feilet", jsonConvertException)
-            emptyList()
         }
-    }
+            .groupBy { it.arbeidsgiver.organisasjonsnummer }
+            .mapKeysNotNull { it?.let(::Orgnr) }
+            .mapValues { (_, arbeidsforholdListe) ->
+                arbeidsforholdListe.map { it.ansettelsesperiode.periode }.toSet()
+            }
 }
