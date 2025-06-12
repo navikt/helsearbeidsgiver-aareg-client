@@ -46,7 +46,7 @@ fun mockAaregClient(vararg responses: Pair<HttpStatusCode, String>): AaregClient
     val mockHttpClient = HttpClient(mockEngine) {
         configure()
 
-        // Overstyr delay for å unngå at testene bruker lang tidAdd commentMore actions
+        // Overstyr delay for å unngå at testene bruker lang tid
         install(HttpRequestRetry) {
             configureRetry()
             constantDelay(
