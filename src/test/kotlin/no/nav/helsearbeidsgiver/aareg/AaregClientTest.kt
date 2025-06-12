@@ -1,8 +1,10 @@
 package no.nav.helsearbeidsgiver.aareg
 
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.maps.shouldContainExactly
+import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.JsonConvertException
@@ -15,7 +17,7 @@ import no.nav.helsearbeidsgiver.utils.wrapper.Orgnr
 class AaregClientTest : FunSpec({
 
     test("gir ikke-tom liste med arbeidsforhold") {
-        val response = mockAaregClient(MockResponse.arbeidsforhold)
+        val response = mockAaregClient(HttpStatusCode.OK to MockResponse.arbeidsforhold)
             .hentAnsettelsesperioder(Fnr("22018520056"), "call-id")
 
         val expectedAnsettelsesperioder =
@@ -29,17 +31,56 @@ class AaregClientTest : FunSpec({
         response shouldContainExactly expectedAnsettelsesperioder
     }
 
-    test("kaster exception ved server-feil fra aareg") {
-        shouldThrowExactly<ServerResponseException> {
-            mockAaregClient("blablabla", HttpStatusCode.InternalServerError)
-                .hentAnsettelsesperioder(Fnr.genererGyldig(), "123456")
+    test("kaster exception ved uventet JSON") {
+        shouldThrowExactly<JsonConvertException> {
+            mockAaregClient(HttpStatusCode.OK to MockResponse.error)
+                .hentAnsettelsesperioder(Fnr.genererGyldig(), "54-56 That's My Number")
         }
     }
 
-    test("kaster exception ved uventet JSON") {
-        shouldThrowExactly<JsonConvertException> {
-            mockAaregClient(MockResponse.error)
-                .hentAnsettelsesperioder(Fnr.genererGyldig(), "54-56 That's My Number")
+    test("feiler ved 4xx-feil") {
+        shouldThrowExactly<ClientRequestException> {
+            mockAaregClient(HttpStatusCode.BadRequest to "")
+                .hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
+        }
+    }
+
+    test("lykkes ved færre 5xx-feil enn max retries (5)") {
+        shouldNotThrowAny {
+            mockAaregClient(
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.OK to MockResponse.arbeidsforhold,
+            ).hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
+        }
+    }
+
+    test("feiler ved flere 5xx-feil enn max retries (5)") {
+        shouldThrowExactly<ServerResponseException> {
+            mockAaregClient(
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+                HttpStatusCode.InternalServerError to "",
+            ).hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
+        }
+    }
+
+    test("kall feiler og prøver på nytt ved timeout") {
+        shouldNotThrowAny {
+            mockAaregClient(
+                HttpStatusCode.OK to "timeout",
+                HttpStatusCode.OK to "timeout",
+                HttpStatusCode.OK to "timeout",
+                HttpStatusCode.OK to "timeout",
+                HttpStatusCode.OK to "timeout",
+                HttpStatusCode.OK to MockResponse.arbeidsforhold,
+            ).hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
         }
     }
 })
