@@ -1,41 +1,45 @@
 package no.nav.helsearbeidsgiver.aareg
 
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.collections.shouldBeEmpty
-import io.kotest.matchers.collections.shouldNotBeEmpty
+import io.kotest.matchers.maps.shouldContainExactly
+import io.ktor.client.plugins.ServerResponseException
 import io.ktor.http.HttpStatusCode
+import io.ktor.serialization.JsonConvertException
+import no.nav.helsearbeidsgiver.utils.test.date.januar
+import no.nav.helsearbeidsgiver.utils.test.date.mars
+import no.nav.helsearbeidsgiver.utils.test.wrapper.genererGyldig
+import no.nav.helsearbeidsgiver.utils.wrapper.Fnr
+import no.nav.helsearbeidsgiver.utils.wrapper.Orgnr
 
 class AaregClientTest : FunSpec({
 
-    /*
-    API Description:
-    https://navikt.github.io/aareg/tjenester/integrasjon/api/
-     */
     test("gir ikke-tom liste med arbeidsforhold") {
         val response = mockAaregClient(MockResponse.arbeidsforhold)
-            .hentArbeidsforhold("ident", "call-id")
+            .hentAnsettelsesperioder(Fnr("22018520056"), "call-id")
 
-        response.filter { it.arbeidsgiver.organisasjonsnummer == "896929119" }.shouldNotBeEmpty()
+        val expectedAnsettelsesperioder =
+            mapOf(
+                Orgnr("896929119") to setOf(
+                    Periode(fom = 22.januar(2001), tom = null),
+                    Periode(fom = 15.mars(2001), tom = null),
+                ),
+            )
+
+        response shouldContainExactly expectedAnsettelsesperioder
     }
 
-    test("gir tom liste ved uventet JSON") {
-        val response = mockAaregClient(MockResponse.error)
-            .hentArbeidsforhold("hei", "54-56 That's My Number")
-
-        response.shouldBeEmpty()
+    test("kaster exception ved server-feil fra aareg") {
+        shouldThrowExactly<ServerResponseException> {
+            mockAaregClient("blablabla", HttpStatusCode.InternalServerError)
+                .hentAnsettelsesperioder(Fnr.genererGyldig(), "123456")
+        }
     }
 
-    test("gir tom liste ved server-feil fra aareg") {
-        val response = mockAaregClient("blablabla", HttpStatusCode.InternalServerError)
-            .hentArbeidsforhold("hei", "123456")
-
-        response.shouldBeEmpty()
-    }
-
-    test("gir tom liste ved feil konfigurert klient") {
-        val client = AaregClient(url = "blah") { "tja" }
-        val response = client.hentArbeidsforhold("hei", "Number 2")
-
-        response.shouldBeEmpty()
+    test("kaster exception ved uventet JSON") {
+        shouldThrowExactly<JsonConvertException> {
+            mockAaregClient(MockResponse.error)
+                .hentAnsettelsesperioder(Fnr.genererGyldig(), "54-56 That's My Number")
+        }
     }
 })

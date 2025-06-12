@@ -8,8 +8,10 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.headersOf
 import io.mockk.every
+import no.nav.helsearbeidsgiver.utils.cache.LocalCache
 import no.nav.helsearbeidsgiver.utils.test.mock.mockStatic
 import no.nav.helsearbeidsgiver.utils.test.resource.readResource
+import kotlin.time.Duration
 
 object MockResponse {
     val arbeidsforhold = "aareg-arbeidsforhold.json".readResource()
@@ -29,6 +31,7 @@ fun mockAaregClient(content: String, statusCode: HttpStatusCode = HttpStatusCode
 
     return mockStatic(::createHttpClient) {
         every { createHttpClient() } returns mockHttpClient
-        AaregClient("url") { "mock access token" }
+
+        AaregClient("url", LocalCache.Config(Duration.ZERO, 1)) { "mock access token" }
     }
 }
