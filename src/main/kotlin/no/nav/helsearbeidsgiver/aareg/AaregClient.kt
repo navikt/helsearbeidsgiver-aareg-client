@@ -8,7 +8,6 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import no.nav.helsearbeidsgiver.utils.cache.LocalCache
 import no.nav.helsearbeidsgiver.utils.collection.mapKeysNotNull
-import no.nav.helsearbeidsgiver.utils.wrapper.Fnr
 import no.nav.helsearbeidsgiver.utils.wrapper.Orgnr
 
 /** Les om API-et til Aareg [her](https://navikt.github.io/aareg/tjenester/integrasjon/api/). */
@@ -20,13 +19,13 @@ class AaregClient(
     private val httpClient = createHttpClient()
     private val cache = LocalCache<List<Arbeidsforhold>>(cacheConfig)
 
-    suspend fun hentAnsettelsesperioder(fnr: Fnr, callId: String): Map<Orgnr, Set<Periode>> =
-        cache.getOrPut(fnr.verdi) {
+    suspend fun hentAnsettelsesperioder(fnr: String, callId: String): Map<Orgnr, Set<Periode>> =
+        cache.getOrPut(fnr) {
             httpClient.get(url) {
                 contentType(ContentType.Application.Json)
                 bearerAuth(getAccessToken())
                 header("X-Correlation-ID", callId)
-                header("Nav-Personident", fnr.verdi)
+                header("Nav-Personident", fnr)
             }.body<List<Arbeidsforhold>>()
         }
             .groupBy { it.arbeidsgiver.organisasjonsnummer }

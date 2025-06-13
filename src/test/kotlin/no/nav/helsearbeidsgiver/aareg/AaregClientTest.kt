@@ -18,7 +18,7 @@ class AaregClientTest : FunSpec({
 
     test("gir ikke-tom liste med arbeidsforhold") {
         val response = mockAaregClient(HttpStatusCode.OK to MockResponse.arbeidsforhold)
-            .hentAnsettelsesperioder(Fnr("22018520056"), "call-id")
+            .hentAnsettelsesperioder("22018520056", "call-id")
 
         val expectedAnsettelsesperioder =
             mapOf(
@@ -34,14 +34,14 @@ class AaregClientTest : FunSpec({
     test("kaster exception ved uventet JSON") {
         shouldThrowExactly<JsonConvertException> {
             mockAaregClient(HttpStatusCode.OK to MockResponse.error)
-                .hentAnsettelsesperioder(Fnr.genererGyldig(), "54-56 That's My Number")
+                .hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "54-56 That's My Number")
         }
     }
 
     test("feiler ved 4xx-feil") {
         shouldThrowExactly<ClientRequestException> {
             mockAaregClient(HttpStatusCode.BadRequest to "")
-                .hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
+                .hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "mock call-id")
         }
     }
 
@@ -54,7 +54,7 @@ class AaregClientTest : FunSpec({
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.OK to MockResponse.arbeidsforhold,
-            ).hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
+            ).hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "mock call-id")
         }
     }
 
@@ -67,7 +67,7 @@ class AaregClientTest : FunSpec({
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
-            ).hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
+            ).hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "mock call-id")
         }
     }
 
@@ -80,7 +80,7 @@ class AaregClientTest : FunSpec({
                 HttpStatusCode.OK to "timeout",
                 HttpStatusCode.OK to "timeout",
                 HttpStatusCode.OK to MockResponse.arbeidsforhold,
-            ).hentAnsettelsesperioder(Fnr.genererGyldig(), "mock call-id")
+            ).hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "mock call-id")
         }
     }
 })
