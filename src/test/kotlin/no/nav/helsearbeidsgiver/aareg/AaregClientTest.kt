@@ -36,7 +36,7 @@ class AaregClientTest : FunSpec({
         response shouldContainExactly expectedAnsettelsesperioder
     }
 
-    test("filtrerer ut arbeidsforhold der arbeidsgiver ikke har gylding orgnr") {
+    test("filtrerer ut arbeidsforhold der arbeidsgiver ikke har gyldig orgnr") {
         val orgnr = Orgnr.genererGyldig()
         val arbeidsforhold = listOf(
             Arbeidsforhold(Arbeidsgiver(orgnr.verdi), Ansettelsesperiode(Periode(3.januar(2021), 7.september(2021)))),
