@@ -8,8 +8,13 @@ import io.ktor.client.plugins.ClientRequestException
 import io.ktor.client.plugins.ServerResponseException
 import io.ktor.http.HttpStatusCode
 import io.ktor.serialization.JsonConvertException
+import no.nav.helsearbeidsgiver.utils.json.serializer.list
+import no.nav.helsearbeidsgiver.utils.json.toJson
 import no.nav.helsearbeidsgiver.utils.test.date.januar
+import no.nav.helsearbeidsgiver.utils.test.date.juli
+import no.nav.helsearbeidsgiver.utils.test.date.juni
 import no.nav.helsearbeidsgiver.utils.test.date.mars
+import no.nav.helsearbeidsgiver.utils.test.date.september
 import no.nav.helsearbeidsgiver.utils.test.wrapper.genererGyldig
 import no.nav.helsearbeidsgiver.utils.wrapper.Fnr
 import no.nav.helsearbeidsgiver.utils.wrapper.Orgnr
@@ -25,6 +30,26 @@ class AaregClientTest : FunSpec({
                 Orgnr("896929119") to setOf(
                     Periode(fom = 22.januar(2001), tom = null),
                     Periode(fom = 15.mars(2001), tom = null),
+                ),
+            )
+
+        response shouldContainExactly expectedAnsettelsesperioder
+    }
+
+    test("filtrerer ut arbeidsforhold der arbeidsgiver ikke har gyldig orgnr") {
+        val orgnr = Orgnr.genererGyldig()
+        val arbeidsforhold = listOf(
+            Arbeidsforhold(Arbeidsgiver(orgnr.verdi), Ansettelsesperiode(Periode(3.januar(2021), 7.september(2021)))),
+            Arbeidsforhold(Arbeidsgiver("PRIVAT"), Ansettelsesperiode(Periode(8.juni(2021), 8.juli(2021)))),
+        )
+
+        val response = mockAaregClient(HttpStatusCode.OK to arbeidsforhold.toJson(Arbeidsforhold.serializer().list()).toString())
+            .hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "call-id")
+
+        val expectedAnsettelsesperioder =
+            mapOf(
+                orgnr to setOf(
+                    Periode(3.januar(2021), 7.september(2021)),
                 ),
             )
 

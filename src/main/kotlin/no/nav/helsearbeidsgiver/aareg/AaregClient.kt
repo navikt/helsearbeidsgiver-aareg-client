@@ -12,10 +12,11 @@ import no.nav.helsearbeidsgiver.utils.wrapper.Orgnr
 
 /** Les om API-et til Aareg [her](https://navikt.github.io/aareg/tjenester/integrasjon/api/). */
 class AaregClient(
-    private val url: String,
+    baseUrl: String,
     cacheConfig: LocalCache.Config,
     private val getAccessToken: () -> String,
 ) {
+    private val url = "$baseUrl/api/v1/arbeidstaker/arbeidsforhold?sporingsinformasjon=false&historikk=false"
     private val httpClient = createHttpClient()
     private val cache = LocalCache<List<Arbeidsforhold>>(cacheConfig)
 
@@ -24,12 +25,18 @@ class AaregClient(
             httpClient.get(url) {
                 contentType(ContentType.Application.Json)
                 bearerAuth(getAccessToken())
-                header("X-Correlation-ID", callId)
                 header("Nav-Personident", fnr)
+                header("X-Correlation-ID", callId)
             }.body<List<Arbeidsforhold>>()
         }
             .groupBy { it.arbeidsgiver.organisasjonsnummer }
-            .mapKeysNotNull { it?.let(::Orgnr) }
+            .mapKeysNotNull {
+                if (it != null && Orgnr.erGyldig(it)) {
+                    Orgnr(it)
+                } else {
+                    null
+                }
+            }
             .mapValues { (_, arbeidsforholdListe) ->
                 arbeidsforholdListe.map { it.ansettelsesperiode.periode }.toSet()
             }
