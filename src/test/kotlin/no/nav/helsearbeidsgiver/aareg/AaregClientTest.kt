@@ -117,17 +117,17 @@ class AaregClientTest : FunSpec({
     }
 
     test("kall feiler og prøver på nytt ved timeout") {
-        val mockAaregClient =
-            mockAaregClient(
-                HttpStatusCode.OK to "timeout",
-                HttpStatusCode.OK to "timeout",
-                HttpStatusCode.OK to "timeout",
-                HttpStatusCode.OK to "timeout",
-                HttpStatusCode.OK to "timeout",
-                HttpStatusCode.OK to MockResponse.arbeidsforhold,
-            )
+        fun test() = runTest {
+            val mockAaregClient =
+                mockAaregClient(
+                    HttpStatusCode.OK to "timeout",
+                    HttpStatusCode.OK to "timeout",
+                    HttpStatusCode.OK to "timeout",
+                    HttpStatusCode.OK to "timeout",
+                    HttpStatusCode.OK to "timeout",
+                    HttpStatusCode.OK to MockResponse.arbeidsforhold,
+                )
 
-        runTest {
             shouldNotThrowAny {
                 mockAaregClient.hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "mock call-id")
             }
