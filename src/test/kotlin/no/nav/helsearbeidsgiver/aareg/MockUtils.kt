@@ -26,7 +26,7 @@ fun mockAaregClient(vararg responses: Pair<HttpStatusCode, String>): AaregClient
             responses.map { (status, content) ->
                 {
                     if (content == "timeout") {
-                        delay(600)
+                        delay(10100)
                     }
                     respond(
                         content = content,

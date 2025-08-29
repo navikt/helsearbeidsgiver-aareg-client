@@ -78,11 +78,9 @@ class AaregClientTest : FunSpec({
         e.response.status shouldBe HttpStatusCode.BadRequest
     }
 
-    test("lykkes ved færre 5xx-feil enn max retries (5)") {
+    test("lykkes ved færre 5xx-feil enn max retries (3)") {
         val mockAaregClient =
             mockAaregClient(
-                HttpStatusCode.InternalServerError to "",
-                HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
@@ -96,11 +94,9 @@ class AaregClientTest : FunSpec({
         }
     }
 
-    test("feiler ved flere 5xx-feil enn max retries (5)") {
+    test("feiler ved flere 5xx-feil enn max retries (3)") {
         val mockAaregClient =
             mockAaregClient(
-                HttpStatusCode.InternalServerError to "",
-                HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
                 HttpStatusCode.InternalServerError to "",
@@ -117,16 +113,14 @@ class AaregClientTest : FunSpec({
     }
 
     test("kall feiler og prøver på nytt ved timeout") {
+        // TODO: runTest skipper ikke delay i mock-klienten, så denne testen tar 3*10 sekunder å kjøre inntil vi finner en skikkelig løsning
         val mockAaregClient =
             mockAaregClient(
                 HttpStatusCode.OK to "timeout",
                 HttpStatusCode.OK to "timeout",
                 HttpStatusCode.OK to "timeout",
-                HttpStatusCode.OK to "timeout",
-                HttpStatusCode.OK to "timeout",
                 HttpStatusCode.OK to MockResponse.arbeidsforhold,
             )
-
         runTest {
             shouldNotThrowAny {
                 mockAaregClient.hentAnsettelsesperioder(Fnr.genererGyldig().verdi, "mock call-id")
