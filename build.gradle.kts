@@ -36,10 +36,6 @@ tasks {
     }
 }
 
-tasks.register("printVersion") {
-    printVersion()
-}
-
 repositories {
     mavenCentral()
     mavenNav("*")
@@ -94,5 +90,3 @@ fun RepositoryHandler.mavenNav(repo: String): MavenArtifactRepository {
         }
     }
 }
-
-fun printVersion() = println(version)
