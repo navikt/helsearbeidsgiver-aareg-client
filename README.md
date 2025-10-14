@@ -2,15 +2,14 @@
 
 Henter arbeidsforhold fra Arbeidsgiver- og arbeidstakerregisteret ([aareg](https://navikt.github.io/aareg/)).
 
-### Bygg / Release
+### Publisere nye versjoner
 
-For å publisere snapshots, lag en branch som starter med dev/
-Bump version i gradle.properties og inkluder -SNAPSHOT: version=1.2.3-SNAPSHOT
+For å publisere snapshots, push til en branch som starter med `dev/`.
+Snapshot-versjonen er basert på `version` i `gradle.properties`. Ved `version=1.2.3` så vil workflow publisere en snapshot `1.2.3-SNAPSHOT`.
+Snapshot-versjoner overskrives for hvert push.
 
-Github Action vil nå publisere SNAPSHOT-version ved push til branch
-
-For å release:
-Fjern "-SNAPSHOT" fra version og merge / push til main-branch.
+For å publisere ny versjon, oppdater `version` i `gradle.properties` og push til branch `main`.
+Dersom versjon allerede eksisterer så vil workflow feile med `409 Conflict`.
 
 ### Bruk av helsearbeidsgiver-aareg-client
 
