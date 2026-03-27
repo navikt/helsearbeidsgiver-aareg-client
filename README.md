@@ -2,6 +2,8 @@
 
 Henter arbeidsforhold fra Arbeidsgiver- og arbeidstakerregisteret ([aareg](https://navikt.github.io/aareg/)).
 
+Se [docs/spec.md](docs/spec.md) for API-spesifikasjon og lenke til Swagger-dokumentasjon.
+
 ### Publisere nye versjoner
 
 For å publisere snapshots, push til en branch som starter med `dev/`.
@@ -29,7 +31,7 @@ import kotlinx.coroutines.runBlocking
 import no.nav.helsearbeidsgiver.aareg.AaregClient
 
 fun main() {
-    val url = "https://modapp-q1.adeo.no/aareg-services"
+    val url = "https://aareg-services.dev.intern.nav.no"
 
     val aaregClient = AaregClient(url) { "et gyldig token" }
 
