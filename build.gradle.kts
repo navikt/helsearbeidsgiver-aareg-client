@@ -54,6 +54,7 @@ publishing {
 
 dependencies {
     val kotestVersion: String by project
+    val kotlinLoggingVersion: String by project
     val ktorVersion: String by project
     val mockkVersion: String by project
     val kotlinxCoroutinesVersion: String by project
@@ -61,9 +62,11 @@ dependencies {
     val slf4jVersion: String by project
     val utilsVersion: String by project
 
+    implementation("io.github.oshai:kotlin-logging-jvm:$kotlinLoggingVersion")
     implementation("io.ktor:ktor-client-apache5:$ktorVersion")
     implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-logging:$ktorVersion")
     implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
     implementation("no.nav.helsearbeidsgiver:utils:$utilsVersion")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$kotlinxSerializationVersion")
