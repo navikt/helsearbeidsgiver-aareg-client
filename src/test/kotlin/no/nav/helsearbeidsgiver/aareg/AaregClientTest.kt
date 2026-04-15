@@ -45,8 +45,14 @@ class AaregClientTest :
             val orgnr = Orgnr.genererGyldig()
             val arbeidsforhold =
                 listOf(
-                    Arbeidsforhold(Arbeidsgiver(orgnr.verdi), Ansettelsesperiode(Periode(3.januar(2021), 7.september(2021)))),
-                    Arbeidsforhold(Arbeidsgiver("PRIVAT"), Ansettelsesperiode(Periode(8.juni(2021), 8.juli(2021)))),
+                    Arbeidsforhold(
+                        Arbeidssted(ArbeidsstedType.UNDERENHET, listOf(Ident(IdentType.ORGANISASJONSNUMMER, orgnr.verdi))),
+                        Ansettelsesperiode(startdato = 3.januar(2021), sluttdato = 7.september(2021)),
+                    ),
+                    Arbeidsforhold(
+                        Arbeidssted(ArbeidsstedType.PERSON, listOf(Ident(IdentType.FOLKEREGISTERIDENT, "12345678901"))),
+                        Ansettelsesperiode(startdato = 8.juni(2021), sluttdato = 8.juli(2021)),
+                    ),
                 )
 
             val mockAaregClient = mockAaregClient(HttpStatusCode.OK to arbeidsforhold.toJson(Arbeidsforhold.serializer().list()).toString())

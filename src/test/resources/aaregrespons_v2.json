@@ -1,0 +1,339 @@
+{
+  "id": "wavHcrXRTBy7hGIP",
+  "type": {
+    "kode": "ordinaertArbeidsforhold",
+    "beskrivelse": "Ordinært arbeidsforhold"
+  },
+  "arbeidstaker": {
+    "identer": [
+      {
+        "type": "AKTORID",
+        "ident": "2487935163633",
+        "gjeldende": true
+      },
+      {
+        "type": "FOLKEREGISTERIDENT",
+        "ident": "14032013245",
+        "gjeldende": true
+      }
+    ]
+  },
+  "arbeidssted": {
+    "type": "Underenhet",
+    "identer": [
+      {
+        "type": "ORGANISASJONSNUMMER",
+        "ident": "987976535"
+      }
+    ]
+  },
+  "opplysningspliktig": {
+    "type": "Hovedenhet",
+    "identer": [
+      {
+        "type": "ORGANISASJONSNUMMER",
+        "ident": "964979367"
+      }
+    ]
+  },
+  "ansettelsesperiode": {
+    "startdato": "2016-10-01",
+    "sporingsinformasjon": {
+      "opprettetTidspunkt": "2021-02-01T01:03:45.153",
+      "opprettetAv": "srvtestnorge-aareg",
+      "opprettetKilde": "AAREG",
+      "opprettetKildereferanse": "testnorge-aareg: e9642969-38d4-484f-8b54-c2676d9b6468",
+      "endretTidspunkt": "2021-02-01T01:03:45.153",
+      "endretAv": "srvtestnorge-aareg",
+      "endretKilde": "AAREG",
+      "endretKildereferanse": "testnorge-aareg: e9642969-38d4-484f-8b54-c2676d9b6468"
+    }
+  },
+  "ansettelsesdetaljer": [
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2021-02",
+        "til": null
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2021-02-01T01:03:45.153",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: e9642969-38d4-484f-8b54-c2676d9b6468",
+        "endretTidspunkt": "2021-02-01T01:03:45.153",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: e9642969-38d4-484f-8b54-c2676d9b6468"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2021-01",
+        "til": "2021-01"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2021-02-01T01:03:45.146",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: e9642969-38d4-484f-8b54-c2676d9b6468",
+        "endretTidspunkt": "2021-02-01T01:03:45.146",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: e9642969-38d4-484f-8b54-c2676d9b6468"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2020-12",
+        "til": "2020-12"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2021-01-01T03:57:26.333",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: 38554756-67d6-4c8d-aee0-e6d7d42054be",
+        "endretTidspunkt": "2021-01-01T03:57:26.333",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: 38554756-67d6-4c8d-aee0-e6d7d42054be"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2020-10",
+        "til": "2020-11"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2020-12-01T01:44:59.399",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: fb513929-b93a-42ac-9656-fc9243fe9632",
+        "endretTidspunkt": "2020-12-01T01:44:59.399",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: fb513929-b93a-42ac-9656-fc9243fe9632"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2020-08",
+        "til": "2020-09"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2020-10-01T01:52:00.696",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: bb0dda95-1a3a-4091-9618-a673169fc0e4",
+        "endretTidspunkt": "2020-10-01T01:52:00.696",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: bb0dda95-1a3a-4091-9618-a673169fc0e4"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2020-07",
+        "til": "2020-07"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2020-08-01T07:50:02.045",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: b2ec0860-59c9-4fd3-a6b4-772f064ebabc",
+        "endretTidspunkt": "2020-08-01T07:50:02.045",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: b2ec0860-59c9-4fd3-a6b4-772f064ebabc"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2020-06",
+        "til": "2020-06"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2020-07-01T03:20:18.38",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: 81572735-3649-431c-9332-0159122714a7",
+        "endretTidspunkt": "2020-07-01T03:20:18.38",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: 81572735-3649-431c-9332-0159122714a7"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2020-04",
+        "til": "2020-05"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2020-06-01T04:29:10.824",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: d922a933-7469-4427-a452-37a50e8c62da",
+        "endretTidspunkt": "2020-06-01T04:29:10.824",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: d922a933-7469-4427-a452-37a50e8c62da"
+      }
+    },
+    {
+      "type": "Ordinaer",
+      "arbeidstidsordning": {
+        "kode": "ikkeSkift",
+        "beskrivelse": "Ikke skift"
+      },
+      "yrke": {
+        "kode": "1210147",
+        "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+      },
+      "antallTimerPrUke": 37.5,
+      "avtaltStillingsprosent": 100.0,
+      "sisteStillingsprosentendring": "2016-10-01",
+      "rapporteringsmaaneder": {
+        "fra": "2016-10",
+        "til": "2020-03"
+      },
+      "sporingsinformasjon": {
+        "opprettetTidspunkt": "2020-04-01T05:16:19.986",
+        "opprettetAv": "srvtestnorge-aareg",
+        "opprettetKilde": "AAREG",
+        "opprettetKildereferanse": "testnorge-aareg: de998479-38ce-402a-9a47-07e628547e68",
+        "endretTidspunkt": "2020-04-01T05:16:19.986",
+        "endretAv": "srvtestnorge-aareg",
+        "endretKilde": "AAREG",
+        "endretKildereferanse": "testnorge-aareg: de998479-38ce-402a-9a47-07e628547e68"
+      }
+    }
+  ],
+  "varsler": [
+    {
+      "entitet": "Arbeidsforhold",
+      "varsling": {
+        "kode": "NAVEND",
+        "beskrivelse": "NAV har opprettet eller endret arbeidsforholdet"
+      }
+    }
+  ],
+  "rapporteringsordning": {
+    "kode": "A_ORDNINGEN",
+    "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
+  },
+  "navArbeidsforholdId": 3049489,
+  "navVersjon": 17,
+  "navUuid": "b59d63d8-25b9-4b71-81b5-19378c0a2569",
+  "opprettet": "2019-05-13T00:54:04.359",
+  "sistBekreftet": "2021-02-01T01:03:45",
+  "sistEndret": "2021-02-01T01:04:05",
+  "bruksperiode": {
+    "fom": "2019-05-13T00:54:04.366",
+    "tom": null
+  },
+  "sporingsinformasjon": {
+    "opprettetTidspunkt": "2019-05-13T00:54:04.367",
+    "opprettetAv": "srvdolly",
+    "opprettetKilde": "AAREG",
+    "opprettetKildereferanse": "Dolly: 7056a9ec-85b1-436a-8dd0-a9335e9231a6",
+    "endretTidspunkt": "2021-02-16T14:10:53.842",
+    "endretAv": "srvappserver",
+    "endretKilde": "PDL",
+    "endretKildereferanse": "testnorge-aareg: e9642969-38d4-484f-8b54-c2676d9b6468"
+  }
+}
