@@ -16,7 +16,7 @@ class AaregClient(
     cacheConfig: LocalCache.Config,
     private val getAccessToken: () -> String,
 ) {
-    private val url = "$baseUrl/api/v1/arbeidstaker/arbeidsforhold?sporingsinformasjon=false&historikk=false"
+    private val url = "$baseUrl/api/v2/arbeidstaker/arbeidsforhold?sporingsinformasjon=false&historikk=false"
     private val httpClient = createHttpClient()
     private val cache = LocalCache<List<Arbeidsforhold>>(cacheConfig)
 
@@ -33,7 +33,7 @@ class AaregClient(
                         header("Nav-Personident", fnr)
                         header("X-Correlation-ID", callId)
                     }.body<List<Arbeidsforhold>>()
-            }.groupBy { it.arbeidsgiver.organisasjonsnummer }
+            }.groupBy { it.arbeidssted.organisasjonsnummer() }
             .mapKeysNotNull {
                 if (it != null && Orgnr.erGyldig(it)) {
                     Orgnr(it)
@@ -41,6 +41,6 @@ class AaregClient(
                     null
                 }
             }.mapValues { (_, arbeidsforholdListe) ->
-                arbeidsforholdListe.map { it.ansettelsesperiode.periode }.toSet()
+                arbeidsforholdListe.map { Periode(fom = it.ansettelsesperiode.startdato, tom = it.ansettelsesperiode.sluttdato) }.toSet()
             }
 }

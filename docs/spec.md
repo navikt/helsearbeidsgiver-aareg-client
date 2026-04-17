@@ -6,8 +6,8 @@ Denne klienten integrerer mot **Arbeidsgiver- og arbeidstakerregisteret (Aareg)*
 
 | Miljø | URL |
 |-------|-----|
-| Dev (intern) | [aareg-services.dev.intern.nav.no/swagger-ui](https://aareg-services.dev.intern.nav.no/swagger-ui/index.html?urls.primaryName=aareg.api.v1) |
-| Prod (intern) | `https://aareg-services.intern.nav.no/swagger-ui/index.html?urls.primaryName=aareg.api.v1` |
+| Dev (intern) | [aareg-services.dev.intern.nav.no/swagger-ui](https://aareg-services.dev.intern.nav.no/swagger-ui/index.html?urls.primaryName=aareg.api.v2) |
+| Prod (intern) | `https://aareg-services.intern.nav.no/swagger-ui/index.html?urls.primaryName=aareg.api.v2` |
 
 > **Merk:** Swagger-URLene er kun tilgjengelige fra Nav-internt nett.
 
@@ -15,16 +15,16 @@ Generell API-dokumentasjon er tilgjengelig på [navikt.github.io/aareg](https://
 
 ## Endepunkt denne klienten bruker
 
-### `GET /api/v1/arbeidstaker/arbeidsforhold`
+### `GET /api/v2/arbeidstaker/arbeidsforhold`
 
-Henter arbeidsforhold for en arbeidstaker.
+Henter arbeidsforhold (detaljer) for en arbeidstaker.
 
 **Query-parametere:**
 
 | Parameter | Verdi | Beskrivelse |
 |-----------|-------|-------------|
-| `sporingsinformasjon` | `false` | Ekskluderer sporingsinformasjon fra responsen |
-| `historikk` | `false` | Ekskluderer historiske arbeidsforhold |
+| `sporingsinformasjon` | `false` | Skal sporingsinformasjon inkluderes i respons? |
+| `historikk` | `false` | Skal historikk inkluderes i respons? |
 
 **Request-headere:**
 
@@ -39,14 +39,15 @@ Henter arbeidsforhold for en arbeidstaker.
 ```json
 [
   {
-    "arbeidsgiver": {
-      "organisasjonsnummer": "123456789"
+    "arbeidssted": {
+      "type": "Underenhet",
+      "identer": [
+        { "type": "ORGANISASJONSNUMMER", "ident": "123456789" }
+      ]
     },
     "ansettelsesperiode": {
-      "periode": {
-        "fom": "2021-01-01",
-        "tom": null
-      }
+      "startdato": "2021-01-01",
+      "sluttdato": null
     }
   }
 ]
