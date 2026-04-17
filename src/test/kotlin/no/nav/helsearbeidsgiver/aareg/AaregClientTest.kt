@@ -33,8 +33,16 @@ class AaregClientTest :
                 mapOf(
                     Orgnr("896929119") to
                         setOf(
-                            Periode(fom = 22.januar(2001), tom = null),
-                            Periode(fom = 15.mars(2001), tom = null),
+                            Ansettelsesinfo(
+                                periode = Periode(fom = 22.januar(2001), tom = null),
+                                yrkeskode = "1210147",
+                                stillingsprosent = 100.0,
+                            ),
+                            Ansettelsesinfo(
+                                periode = Periode(fom = 15.mars(2001), tom = null),
+                                yrkeskode = null,
+                                stillingsprosent = null,
+                            ),
                         ),
                 )
 
@@ -63,7 +71,7 @@ class AaregClientTest :
                 mapOf(
                     orgnr to
                         setOf(
-                            Periode(3.januar(2021), 7.september(2021)),
+                            Ansettelsesinfo(periode = Periode(3.januar(2021), 7.september(2021))),
                         ),
                 )
 

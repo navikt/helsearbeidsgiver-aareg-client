@@ -12,6 +12,18 @@ import java.time.LocalDate
 internal data class Arbeidsforhold(
     val arbeidssted: Arbeidssted,
     val ansettelsesperiode: Ansettelsesperiode,
+    val ansettelsesdetaljer: List<Ansettelsesdetalj>? = null,
+)
+
+@Serializable
+internal data class Ansettelsesdetalj(
+    val yrke: Yrke? = null,
+    val avtaltStillingsprosent: Double? = null,
+)
+
+@Serializable
+internal data class Yrke(
+    val kode: String,
 )
 
 @Serializable

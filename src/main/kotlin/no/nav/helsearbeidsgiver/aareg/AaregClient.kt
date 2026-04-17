@@ -23,7 +23,7 @@ class AaregClient(
     suspend fun hentAnsettelsesperioder(
         fnr: String,
         callId: String,
-    ): Map<Orgnr, Set<Periode>> =
+    ): Map<Orgnr, Set<Ansettelsesinfo>> =
         cache
             .getOrPut(fnr) {
                 httpClient
@@ -41,6 +41,14 @@ class AaregClient(
                     null
                 }
             }.mapValues { (_, arbeidsforholdListe) ->
-                arbeidsforholdListe.map { Periode(fom = it.ansettelsesperiode.startdato, tom = it.ansettelsesperiode.sluttdato) }.toSet()
+                arbeidsforholdListe
+                    .map {
+                        val detalj = it.ansettelsesdetaljer?.firstOrNull()
+                        Ansettelsesinfo(
+                            periode = Periode(fom = it.ansettelsesperiode.startdato, tom = it.ansettelsesperiode.sluttdato),
+                            yrkeskode = detalj?.yrke?.kode,
+                            stillingsprosent = detalj?.avtaltStillingsprosent,
+                        )
+                    }.toSet()
             }
 }

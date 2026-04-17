@@ -35,6 +35,15 @@
     "ansettelsesperiode": {
       "startdato": "2001-01-22"
     },
+    "ansettelsesdetaljer": [
+      {
+        "yrke": {
+          "kode": "1210147",
+          "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+        },
+        "avtaltStillingsprosent": 100.0
+      }
+    ],
     "rapporteringsordning": {
       "kode": "A_ORDNINGEN",
       "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
