@@ -23,7 +23,42 @@ class AaregClient(
     suspend fun hentAnsettelsesperioder(
         fnr: String,
         callId: String,
+    ): Map<Orgnr, Set<Periode>> =
+        hentArbeidsforholdPerOrgnr(fnr, callId)
+            .mapValues { (_, arbeidsforholdListe) ->
+                arbeidsforholdListe
+                    .map { Periode(fom = it.ansettelsesperiode.startdato, tom = it.ansettelsesperiode.sluttdato) }
+                    .toSet()
+            }
+
+    suspend fun hentAnsettelsesinfo(
+        fnr: String,
+        callId: String,
     ): Map<Orgnr, Set<Ansettelsesinfo>> =
+        hentArbeidsforholdPerOrgnr(fnr, callId)
+            .mapValues { (_, arbeidsforholdListe) ->
+                arbeidsforholdListe
+                    .map {
+                        Ansettelsesinfo(
+                            startdato = it.ansettelsesperiode.startdato,
+                            sluttdato = it.ansettelsesperiode.sluttdato,
+                            detaljer =
+                                it.ansettelsesdetaljer
+                                    ?.map { detalj ->
+                                        Ansettelsesdetaljer(
+                                            yrkesKode = detalj.yrke?.kode,
+                                            yrkesBeskrivelse = detalj.yrke?.beskrivelse,
+                                            stillingsprosent = detalj.avtaltStillingsprosent,
+                                        )
+                                    }.orEmpty(),
+                        )
+                    }.toSet()
+            }
+
+    private suspend fun hentArbeidsforholdPerOrgnr(
+        fnr: String,
+        callId: String,
+    ): Map<Orgnr, List<Arbeidsforhold>> =
         cache
             .getOrPut(fnr) {
                 httpClient
@@ -40,15 +75,5 @@ class AaregClient(
                 } else {
                     null
                 }
-            }.mapValues { (_, arbeidsforholdListe) ->
-                arbeidsforholdListe
-                    .map {
-                        val detalj = it.ansettelsesdetaljer?.firstOrNull()
-                        Ansettelsesinfo(
-                            periode = Periode(fom = it.ansettelsesperiode.startdato, tom = it.ansettelsesperiode.sluttdato),
-                            yrkeskode = detalj?.yrke?.kode,
-                            stillingsprosent = detalj?.avtaltStillingsprosent,
-                        )
-                    }.toSet()
             }
 }
