@@ -8,7 +8,7 @@ import no.nav.helsearbeidsgiver.utils.json.serializer.LocalDateSerializer
 import java.time.LocalDate
 
 @Serializable
-data class Ansettelsesinfo(
+data class Ansettelsesforhold(
     val startdato: LocalDate,
     val sluttdato: LocalDate? = null,
     val detaljer: List<Ansettelsesdetaljer> = emptyList(),

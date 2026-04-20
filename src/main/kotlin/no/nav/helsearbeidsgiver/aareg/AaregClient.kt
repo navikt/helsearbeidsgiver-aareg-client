@@ -31,15 +31,15 @@ class AaregClient(
                     .toSet()
             }
 
-    suspend fun hentAnsettelsesinfo(
+    suspend fun hentAnsettelsesforhold(
         fnr: String,
         callId: String,
-    ): Map<Orgnr, Set<Ansettelsesinfo>> =
+    ): Map<Orgnr, Set<Ansettelsesforhold>> =
         hentArbeidsforholdPerOrgnr(fnr, callId)
             .mapValues { (_, arbeidsforholdListe) ->
                 arbeidsforholdListe
                     .map {
-                        Ansettelsesinfo(
+                        Ansettelsesforhold(
                             startdato = it.ansettelsesperiode.startdato,
                             sluttdato = it.ansettelsesperiode.sluttdato,
                             detaljer =

@@ -70,16 +70,16 @@ class AaregClientTest :
             response shouldContainExactly expectedAnsettelsesperioder
         }
 
-        test("hentAnsettelsesinfo gir ikke-tom liste med ansettelsesinfo") {
+        test("hentAnsettelsesforhold gir ikke-tom liste med ansettelsesinfo") {
             val mockAaregClient = mockAaregClient(HttpStatusCode.OK to MockResponse.arbeidsforhold)
 
-            val response = mockAaregClient.hentAnsettelsesinfo("22018520056", "call-id")
+            val response = mockAaregClient.hentAnsettelsesforhold("22018520056", "call-id")
 
-            val expectedAnsettelsesinfo =
+            val expectedAnsettelsesforhold =
                 mapOf(
                     Orgnr("896929119") to
                         setOf(
-                            Ansettelsesinfo(
+                            Ansettelsesforhold(
                                 startdato = 22.januar(2001),
                                 sluttdato = null,
                                 detaljer =
@@ -91,7 +91,7 @@ class AaregClientTest :
                                         ),
                                     ),
                             ),
-                            Ansettelsesinfo(
+                            Ansettelsesforhold(
                                 startdato = 15.mars(2001),
                                 sluttdato = null,
                                 detaljer = emptyList(),
@@ -99,10 +99,10 @@ class AaregClientTest :
                         ),
                 )
 
-            response shouldContainExactly expectedAnsettelsesinfo
+            response shouldContainExactly expectedAnsettelsesforhold
         }
 
-        test("hentAnsettelsesinfo filtrerer ut arbeidsforhold der arbeidsgiver ikke har gyldig orgnr") {
+        test("hentAnsettelsesforhold filtrerer ut arbeidsforhold der arbeidsgiver ikke har gyldig orgnr") {
             val orgnr = Orgnr.genererGyldig()
             val arbeidsforhold =
                 listOf(
@@ -118,17 +118,17 @@ class AaregClientTest :
 
             val mockAaregClient = mockAaregClient(HttpStatusCode.OK to arbeidsforhold.toJson(Arbeidsforhold.serializer().list()).toString())
 
-            val response = mockAaregClient.hentAnsettelsesinfo(Fnr.genererGyldig().verdi, "call-id")
+            val response = mockAaregClient.hentAnsettelsesforhold(Fnr.genererGyldig().verdi, "call-id")
 
-            val expectedAnsettelsesinfo =
+            val expectedAnsettelsesforhold =
                 mapOf(
                     orgnr to
                         setOf(
-                            Ansettelsesinfo(startdato = 3.januar(2021), sluttdato = 7.september(2021)),
+                            Ansettelsesforhold(startdato = 3.januar(2021), sluttdato = 7.september(2021)),
                         ),
                 )
 
-            response shouldContainExactly expectedAnsettelsesinfo
+            response shouldContainExactly expectedAnsettelsesforhold
         }
 
         test("kaster exception ved uventet JSON") {
