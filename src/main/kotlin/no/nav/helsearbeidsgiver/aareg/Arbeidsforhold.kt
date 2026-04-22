@@ -19,6 +19,13 @@ internal data class Arbeidsforhold(
 internal data class AnsettelsesdetaljResponse(
     val yrke: Yrke? = null,
     val avtaltStillingsprosent: Double? = null,
+    val rapporteringsmaaneder: Rapporteringsmaaneder? = null,
+)
+
+@Serializable
+internal data class Rapporteringsmaaneder(
+    val fra: String? = null,
+    val til: String? = null,
 )
 
 @Serializable

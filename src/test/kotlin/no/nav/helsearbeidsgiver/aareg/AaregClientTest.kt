@@ -82,19 +82,13 @@ class AaregClientTest :
                             Ansettelsesforhold(
                                 startdato = 22.januar(2001),
                                 sluttdato = null,
-                                detaljer =
-                                    listOf(
-                                        Ansettelsesdetaljer(
-                                            yrkesKode = "1210147",
-                                            yrkesBeskrivelse = "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)",
-                                            stillingsprosent = 100.0,
-                                        ),
-                                    ),
+                                yrkesKode = "1210147",
+                                yrkesBeskrivelse = "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)",
+                                stillingsprosent = 100.0,
                             ),
                             Ansettelsesforhold(
                                 startdato = 15.mars(2001),
                                 sluttdato = null,
-                                detaljer = emptyList(),
                             ),
                         ),
                 )

@@ -11,11 +11,6 @@ import java.time.LocalDate
 data class Ansettelsesforhold(
     val startdato: LocalDate,
     val sluttdato: LocalDate? = null,
-    val detaljer: List<Ansettelsesdetaljer> = emptyList(),
-)
-
-@Serializable
-data class Ansettelsesdetaljer(
     val yrkesKode: String? = null,
     val yrkesBeskrivelse: String? = null,
     val stillingsprosent: Double? = null,

@@ -38,10 +38,25 @@
     "ansettelsesdetaljer": [
       {
         "yrke": {
+          "kode": "9999999",
+          "beskrivelse": "GAMMEL STILLING"
+        },
+        "avtaltStillingsprosent": 50.0,
+        "rapporteringsmaaneder": {
+          "fra": "2001-01",
+          "til": "2020-12"
+        }
+      },
+      {
+        "yrke": {
           "kode": "1210147",
           "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
         },
-        "avtaltStillingsprosent": 100.0
+        "avtaltStillingsprosent": 100.0,
+        "rapporteringsmaaneder": {
+          "fra": "2021-01",
+          "til": null
+        }
       }
     ],
     "rapporteringsordning": {
