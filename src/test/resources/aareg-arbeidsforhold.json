@@ -102,6 +102,14 @@
     "ansettelsesperiode": {
       "startdato": "2001-03-15"
     },
+    "ansettelsesdetaljer": [
+      {
+        "rapporteringsmaaneder": {
+          "fra": "2001-03",
+          "til": null
+        }
+      }
+    ],
     "rapporteringsordning": {
       "kode": "A_ORDNINGEN",
       "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"

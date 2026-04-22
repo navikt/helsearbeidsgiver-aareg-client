@@ -48,10 +48,12 @@ class AaregClientTest :
                     Arbeidsforhold(
                         Arbeidssted(ArbeidsstedType.UNDERENHET, listOf(Ident(IdentType.ORGANISASJONSNUMMER, orgnr.verdi))),
                         Ansettelsesperiode(startdato = 3.januar(2021), sluttdato = 7.september(2021)),
+                        listOf(AnsettelsesdetaljResponse()),
                     ),
                     Arbeidsforhold(
                         Arbeidssted(ArbeidsstedType.PERSON, listOf(Ident(IdentType.FOLKEREGISTERIDENT, "12345678901"))),
                         Ansettelsesperiode(startdato = 8.juni(2021), sluttdato = 8.juli(2021)),
+                        listOf(AnsettelsesdetaljResponse()),
                     ),
                 )
 
@@ -103,10 +105,12 @@ class AaregClientTest :
                     Arbeidsforhold(
                         Arbeidssted(ArbeidsstedType.UNDERENHET, listOf(Ident(IdentType.ORGANISASJONSNUMMER, orgnr.verdi))),
                         Ansettelsesperiode(startdato = 3.januar(2021), sluttdato = 7.september(2021)),
+                        listOf(AnsettelsesdetaljResponse()),
                     ),
                     Arbeidsforhold(
                         Arbeidssted(ArbeidsstedType.PERSON, listOf(Ident(IdentType.FOLKEREGISTERIDENT, "12345678901"))),
                         Ansettelsesperiode(startdato = 8.juni(2021), sluttdato = 8.juli(2021)),
+                        listOf(AnsettelsesdetaljResponse()),
                     ),
                 )
 

@@ -40,15 +40,15 @@ class AaregClient(
                 arbeidsforholdListe
                     .map {
                         val gjeldendeDetalj =
-                            it.ansettelsesdetaljer?.firstOrNull { detalj ->
+                            it.ansettelsesdetaljer.first { detalj ->
                                 detalj.rapporteringsmaaneder?.til == null
                             }
                         Ansettelsesforhold(
                             startdato = it.ansettelsesperiode.startdato,
                             sluttdato = it.ansettelsesperiode.sluttdato,
-                            yrkesKode = gjeldendeDetalj?.yrke?.kode,
-                            yrkesBeskrivelse = gjeldendeDetalj?.yrke?.beskrivelse,
-                            stillingsprosent = gjeldendeDetalj?.avtaltStillingsprosent,
+                            yrkesKode = gjeldendeDetalj.yrke?.kode,
+                            yrkesBeskrivelse = gjeldendeDetalj.yrke?.beskrivelse,
+                            stillingsprosent = gjeldendeDetalj.avtaltStillingsprosent,
                         )
                     }.toSet()
             }

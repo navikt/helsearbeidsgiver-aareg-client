@@ -12,7 +12,7 @@ import java.time.LocalDate
 internal data class Arbeidsforhold(
     val arbeidssted: Arbeidssted,
     val ansettelsesperiode: Ansettelsesperiode,
-    val ansettelsesdetaljer: List<AnsettelsesdetaljResponse>? = null,
+    val ansettelsesdetaljer: List<AnsettelsesdetaljResponse>,
 )
 
 @Serializable
