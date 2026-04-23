@@ -35,6 +35,30 @@
     "ansettelsesperiode": {
       "startdato": "2001-01-22"
     },
+    "ansettelsesdetaljer": [
+      {
+        "yrke": {
+          "kode": "9999999",
+          "beskrivelse": "GAMMEL STILLING"
+        },
+        "avtaltStillingsprosent": 50.0,
+        "rapporteringsmaaneder": {
+          "fra": "2001-01",
+          "til": "2020-12"
+        }
+      },
+      {
+        "yrke": {
+          "kode": "1210147",
+          "beskrivelse": "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)"
+        },
+        "avtaltStillingsprosent": 100.0,
+        "rapporteringsmaaneder": {
+          "fra": "2021-01",
+          "til": null
+        }
+      }
+    ],
     "rapporteringsordning": {
       "kode": "A_ORDNINGEN",
       "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"
@@ -78,6 +102,14 @@
     "ansettelsesperiode": {
       "startdato": "2001-03-15"
     },
+    "ansettelsesdetaljer": [
+      {
+        "rapporteringsmaaneder": {
+          "fra": "2001-03",
+          "til": null
+        }
+      }
+    ],
     "rapporteringsordning": {
       "kode": "A_ORDNINGEN",
       "beskrivelse": "Rapportert via a-ordningen (2015-d.d.)"

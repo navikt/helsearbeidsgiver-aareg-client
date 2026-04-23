@@ -24,6 +24,39 @@ class AaregClient(
         fnr: String,
         callId: String,
     ): Map<Orgnr, Set<Periode>> =
+        hentArbeidsforholdPerOrgnr(fnr, callId)
+            .mapValues { (_, arbeidsforholdListe) ->
+                arbeidsforholdListe
+                    .map { Periode(fom = it.ansettelsesperiode.startdato, tom = it.ansettelsesperiode.sluttdato) }
+                    .toSet()
+            }
+
+    suspend fun hentAnsettelsesforhold(
+        fnr: String,
+        callId: String,
+    ): Map<Orgnr, Set<Ansettelsesforhold>> =
+        hentArbeidsforholdPerOrgnr(fnr, callId)
+            .mapValues { (_, arbeidsforholdListe) ->
+                arbeidsforholdListe
+                    .map {
+                        val gjeldendeDetalj =
+                            it.ansettelsesdetaljer.first { detalj ->
+                                detalj.rapporteringsmaaneder?.til == null
+                            }
+                        Ansettelsesforhold(
+                            startdato = it.ansettelsesperiode.startdato,
+                            sluttdato = it.ansettelsesperiode.sluttdato,
+                            yrkesKode = gjeldendeDetalj.yrke?.kode,
+                            yrkesBeskrivelse = gjeldendeDetalj.yrke?.beskrivelse,
+                            stillingsprosent = gjeldendeDetalj.avtaltStillingsprosent,
+                        )
+                    }.toSet()
+            }
+
+    private suspend fun hentArbeidsforholdPerOrgnr(
+        fnr: String,
+        callId: String,
+    ): Map<Orgnr, List<Arbeidsforhold>> =
         cache
             .getOrPut(fnr) {
                 httpClient
@@ -40,7 +73,5 @@ class AaregClient(
                 } else {
                     null
                 }
-            }.mapValues { (_, arbeidsforholdListe) ->
-                arbeidsforholdListe.map { Periode(fom = it.ansettelsesperiode.startdato, tom = it.ansettelsesperiode.sluttdato) }.toSet()
             }
 }
