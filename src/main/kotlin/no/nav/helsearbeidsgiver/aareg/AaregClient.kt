@@ -46,8 +46,8 @@ class AaregClient(
                         Ansettelsesforhold(
                             startdato = it.ansettelsesperiode.startdato,
                             sluttdato = it.ansettelsesperiode.sluttdato,
-                            yrkesKode = gjeldendeDetalj.yrke?.kode,
-                            yrkesBeskrivelse = gjeldendeDetalj.yrke?.beskrivelse,
+                            yrkeskode = gjeldendeDetalj.yrke?.kode,
+                            yrkesbeskrivelse = gjeldendeDetalj.yrke?.beskrivelse,
                             stillingsprosent = gjeldendeDetalj.avtaltStillingsprosent,
                         )
                     }.toSet()
