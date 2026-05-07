@@ -84,8 +84,8 @@ class AaregClientTest :
                             Ansettelsesforhold(
                                 startdato = 22.januar(2001),
                                 sluttdato = null,
-                                yrkesKode = "1210147",
-                                yrkesBeskrivelse = "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)",
+                                yrkeskode = "1210147",
+                                yrkesbeskrivelse = "STYRER (BARNEHAGE - OVER 9 ANSATTE - PRIVAT VIRKSOMHET)",
                                 stillingsprosent = 100.0,
                             ),
                             Ansettelsesforhold(
