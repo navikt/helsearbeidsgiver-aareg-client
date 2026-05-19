@@ -80,7 +80,7 @@ class AaregClientTest :
             val expectedAnsettelsesforhold =
                 mapOf(
                     Orgnr("896929119") to
-                        setOf(
+                        listOf(
                             Ansettelsesforhold(
                                 startdato = 22.januar(2001),
                                 sluttdato = null,
@@ -121,7 +121,7 @@ class AaregClientTest :
             val expectedAnsettelsesforhold =
                 mapOf(
                     orgnr to
-                        setOf(
+                        listOf(
                             Ansettelsesforhold(startdato = 3.januar(2021), sluttdato = 7.september(2021)),
                         ),
                 )

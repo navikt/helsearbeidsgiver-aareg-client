@@ -34,7 +34,7 @@ class AaregClient(
     suspend fun hentAnsettelsesforhold(
         fnr: String,
         callId: String,
-    ): Map<Orgnr, Set<Ansettelsesforhold>> =
+    ): Map<Orgnr, List<Ansettelsesforhold>> =
         hentArbeidsforholdPerOrgnr(fnr, callId)
             .mapValues { (_, arbeidsforholdListe) ->
                 arbeidsforholdListe
@@ -50,7 +50,7 @@ class AaregClient(
                             yrkesbeskrivelse = gjeldendeDetalj.yrke?.beskrivelse,
                             stillingsprosent = gjeldendeDetalj.avtaltStillingsprosent,
                         )
-                    }.toSet()
+                    }
             }
 
     private suspend fun hentArbeidsforholdPerOrgnr(
