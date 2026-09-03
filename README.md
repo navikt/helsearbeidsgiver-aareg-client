@@ -1,6 +1,6 @@
 # helsearbeidsgiver-aareg-client
 
-Henter arbeidsforhold fra Arbeidsgiver- og arbeidstakerregisteret ([aareg](https://navikt.github.io/aareg/)).
+Henter arbeidsforhold fra Arbeidsgiver- og arbeidstakerregisteret ([aareg](https://github.com/navikt/aareg-services)).
 
 Se [docs/spec.md](docs/spec.md) for API-spesifikasjon og lenke til Swagger-dokumentasjon.
 

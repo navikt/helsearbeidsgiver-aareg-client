@@ -10,13 +10,13 @@ import no.nav.helsearbeidsgiver.utils.cache.LocalCache
 import no.nav.helsearbeidsgiver.utils.collection.mapKeysNotNull
 import no.nav.helsearbeidsgiver.utils.wrapper.Orgnr
 
-/** Les om API-et til Aareg [her](https://navikt.github.io/aareg/tjenester/integrasjon/api/). */
+/** [API Swagger](https://aareg-services.intern.dev.nav.no/swagger-ui/index.html?urls.primaryName=aareg.api.v2). */
 class AaregClient(
     baseUrl: String,
     cacheConfig: LocalCache.Config,
     private val getAccessToken: () -> String,
 ) {
-    private val url = "$baseUrl/api/v2/arbeidstaker/arbeidsforhold?sporingsinformasjon=false&historikk=false"
+    private val url = "$baseUrl/api/v2/arbeidstaker/arbeidsforhold?arbeidsforholdstatus=AVSLUTTET,AKTIV,FREMTIDIG"
     private val httpClient = createHttpClient()
     private val cache = LocalCache<List<Arbeidsforhold>>(cacheConfig)
 
