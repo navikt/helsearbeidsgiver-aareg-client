@@ -7,7 +7,7 @@ Se [docs/spec.md](docs/spec.md) for API-spesifikasjon og Swagger-lenker.
 
 ## Tech Stack
 
-- Kotlin (JVM 21)
+- Kotlin (JVM 25)
 - Ktor client (Apache5 engine)
 - kotlinx.serialization for JSON
 - Kotest for testing
